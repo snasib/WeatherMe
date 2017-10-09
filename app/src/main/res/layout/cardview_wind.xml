@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textWind"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="8dp"
+        android:text="Wind" />
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            >
+
+            <ImageView
+                android:id="@+id/imageWindTurbine"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                app:srcCompat="@drawable/windturbine" />
+
+            <TextView
+                android:id="@+id/textView35"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="false"
+                android:layout_centerVertical="false"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="21dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@+id/imageWindTurbine"
+                android:gravity="center_vertical"
+                android:text="Direction" />
+
+            <TextView
+                android:id="@+id/textView37"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/textView35"
+                android:layout_below="@+id/textView35"
+                android:layout_centerHorizontal="false"
+                android:layout_centerInParent="false"
+                android:layout_centerVertical="false"
+                android:gravity="center_vertical"
+                android:text="Speed" />
+
+            <TextView
+                android:id="@+id/textWindDirection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/textView35"
+                android:layout_alignBottom="@+id/textView35"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="33dp"
+                android:text="WSW"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/textWindSpeed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/textView37"
+                android:layout_alignBottom="@+id/textView37"
+                android:layout_alignEnd="@+id/textWindDirection"
+                android:text="23 km/hour"
+                android:textColor="@android:color/black" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

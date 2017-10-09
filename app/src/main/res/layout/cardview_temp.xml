@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textCity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:gravity="center_horizontal"
+        android:text="Esch-sur-Alzette"
+        android:textColor="@android:color/black"
+        android:textSize="24sp" />
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="141dp"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/imageTempSign"
+                android:layout_width="50dp"
+                android:layout_height="70dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:contentDescription="@string/desc_imageTempSign"
+                app:srcCompat="@drawable/temperature" />
+
+            <ImageView
+                android:id="@+id/imageIcon"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:contentDescription="@string/desc_imageIcon"
+                android:foregroundGravity="left"
+                app:srcCompat="@drawable/clear_day" />
+
+            <TextView
+                android:id="@+id/textTemp"
+                android:layout_width="90dp"
+                android:layout_height="70dp"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/imageTempSign"
+                android:gravity="center_vertical|center_horizontal|center"
+                android:text="10°"
+                android:textColor="@android:color/black"
+                android:textSize="54sp" />
+
+            <TextView
+                android:id="@+id/textTempDayMax"
+                android:layout_width="wrap_content"
+                android:layout_height="18dp"
+                android:layout_below="@+id/imageTempSign"
+                android:layout_marginEnd="12dp"
+                android:layout_marginRight="4dp"
+                android:layout_toStartOf="@+id/textTempDayMin"
+                android:text="max 14°"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/textTempDayMin"
+                android:layout_width="wrap_content"
+                android:layout_height="18dp"
+                android:layout_alignEnd="@+id/textTemp"
+                android:layout_below="@+id/textTemp"
+                android:text="min 9°"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/textLastUpdated"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:text="03:05 08.10.2017"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/textSummary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/textLastUpdated"
+                android:layout_alignBottom="@+id/textLastUpdated"
+                android:layout_alignParentStart="true"
+                android:text="Rain throughout the day."
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

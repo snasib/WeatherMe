@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Weather Me</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+    <string name="pref_title_units">Units</string>
+    <string name="pref_title_sync_frequency">Sync frequency</string>
+    <string name="pref_title_time_format">Time format</string>
+    <string name="pref_category_manage_cities">Manage cities</string>
+    <string name="desc_imageTempSign">Temperature Sign in front of the Temperature</string>
+    <string name="desc_imageIcon">Represents the icon that changes with the weather</string>
+
+</resources>

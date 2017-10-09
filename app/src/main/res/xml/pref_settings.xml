@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory>
+        <ListPreference
+            android:defaultValue="auto"
+            android:entries="@array/pref_units_titles"
+            android:entryValues="@array/pref_units_values"
+            android:key="unit_choice"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null"
+            android:title="@string/pref_title_units" />
+
+        <ListPreference
+            android:defaultValue="180"
+            android:entries="@array/pref_sync_frequency_titles"
+            android:entryValues="@array/pref_sync_frequency_values"
+            android:key="sync_frequency"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null"
+            android:title="@string/pref_title_sync_frequency" />
+
+        <ListPreference
+            android:defaultValue="HH"
+            android:entries="@array/pref_time_format_titles"
+            android:entryValues="@array/pref_time_format_values"
+            android:key="time_format"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null"
+            android:title="@string/pref_title_time_format" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
