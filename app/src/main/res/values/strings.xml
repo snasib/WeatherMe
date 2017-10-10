@@ -8,7 +8,21 @@
     <string name="pref_title_sync_frequency">Sync frequency</string>
     <string name="pref_title_time_format">Time format</string>
     <string name="pref_category_manage_cities">Manage cities</string>
-    <string name="desc_imageTempSign">Temperature Sign in front of the Temperature</string>
-    <string name="desc_imageIcon">Represents the icon that changes with the weather</string>
+    <string name="desc_imageTempSign">Temperature Indicator Sign</string>
+    <string name="desc_imageIcon">Weather Icon</string>
+    <string name="settings_title_preferences">Preferences</string>
+    <string name="details">Details</string>
+    <string name="pressure">Pressure</string>
+    <string name="visibility">Visibility</string>
+    <string name="humidity">Humidity</string>
+    <string name="sunrise_amp_sunset"><![CDATA[Sunrise & Sunset]]></string>
+    <string name="city_name">City Name</string>
+    <string name="weather_summary">Weather Summary</string>
+    <string name="last_update_time">03:05 08.10.2017</string>
+    <string name="wind">Wind</string>
+    <string name="direction">Direction</string>
+    <string name="speed">Speed</string>
+    <string name="wind_direction">WSW</string>
+    <string name="wind_speed">23 km/hour</string>
 
 </resources>

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textDetails"
+        android:id="@+id/text_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="8dp"
-        android:text="Details" />
+        android:text="@string/details" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,6 +19,7 @@
         android:orientation="horizontal">
 
         <android.support.v7.widget.CardView
+            android:id="@+id/cardview_pressure"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="8dp"
@@ -32,15 +33,15 @@
                 android:padding="4dp">
 
                 <TextView
-                    android:id="@+id/Pressure"
+                    android:id="@+id/text_pressure"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:text="Pressure" />
+                    android:text="@string/pressure" />
 
                 <ImageView
-                    android:id="@+id/imagePressure"
+                    android:id="@+id/image_pressure"
                     android:layout_width="40dp"
                     android:layout_height="25dp"
                     android:layout_centerHorizontal="true"
@@ -48,10 +49,10 @@
                     app:srcCompat="@drawable/pressure" />
 
                 <TextView
-                    android:id="@+id/textPressureVal"
+                    android:id="@+id/text_pressure_val"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignEnd="@+id/Pressure"
+                    android:layout_alignEnd="@+id/text_pressure"
                     android:layout_alignParentBottom="true"
                     android:text="975 HPa"
                     android:textColor="@android:color/black" />
@@ -61,6 +62,7 @@
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
+            android:id="@+id/cardview_visibility"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="8dp"
@@ -73,15 +75,15 @@
                 android:padding="4dp">
 
                 <TextView
-                    android:id="@+id/Visibility"
+                    android:id="@+id/text_visibility"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:text="Visibility" />
+                    android:text="@string/visibility" />
 
                 <ImageView
-                    android:id="@+id/imageView3"
+                    android:id="@+id/image_visibility"
                     android:layout_width="40dp"
                     android:layout_height="25dp"
                     android:layout_centerHorizontal="true"
@@ -90,7 +92,7 @@
                     app:srcCompat="@drawable/visibility" />
 
                 <TextView
-                    android:id="@+id/textVisibilityVal"
+                    android:id="@+id/text_visibility_val"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
@@ -103,6 +105,7 @@
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
+            android:id="@+id/cardview_humidity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -114,15 +117,15 @@
                 android:padding="4dp">
 
                 <TextView
-                    android:id="@+id/Humidity"
+                    android:id="@+id/text_humidity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:text="Humidity" />
+                    android:text="@string/humidity" />
 
                 <ImageView
-                    android:id="@+id/imageHumidity"
+                    android:id="@+id/image_humidity"
                     android:layout_width="40dp"
                     android:layout_height="25dp"
                     android:layout_centerHorizontal="true"
@@ -130,7 +133,7 @@
                     app:srcCompat="@drawable/humidity" />
 
                 <TextView
-                    android:id="@+id/textHumidityVal"
+                    android:id="@+id/text_humidity_val"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"

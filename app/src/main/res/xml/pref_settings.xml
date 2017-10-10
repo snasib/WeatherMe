@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/settings_title_preferences">
         <ListPreference
             android:defaultValue="auto"
             android:entries="@array/pref_units_titles"
             android:entryValues="@array/pref_units_values"
-            android:key="unit_choice"
+            android:key="pref_unit_choice"
             android:negativeButtonText="@null"
             android:positiveButtonText="@null"
             android:title="@string/pref_title_units" />
@@ -15,7 +14,7 @@
             android:defaultValue="180"
             android:entries="@array/pref_sync_frequency_titles"
             android:entryValues="@array/pref_sync_frequency_values"
-            android:key="sync_frequency"
+            android:key="pref_sync_frequency"
             android:negativeButtonText="@null"
             android:positiveButtonText="@null"
             android:title="@string/pref_title_sync_frequency" />
@@ -24,7 +23,7 @@
             android:defaultValue="HH"
             android:entries="@array/pref_time_format_titles"
             android:entryValues="@array/pref_time_format_values"
-            android:key="time_format"
+            android:key="pref_time_format"
             android:negativeButtonText="@null"
             android:positiveButtonText="@null"
             android:title="@string/pref_title_time_format" />
