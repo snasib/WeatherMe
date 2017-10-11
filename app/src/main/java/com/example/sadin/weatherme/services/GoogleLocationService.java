@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
+import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
@@ -22,6 +23,8 @@ import com.google.android.gms.location.LocationServices;
 
 public class GoogleLocationService extends Service implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
     private static final String TAG = "GoogleLocationService";
+    // Binder given to clients
+    private final IBinder mBinder = new LocalBinder();
     private LocationRequest mLocationRequest;
     private GoogleApiClient mGoogleApiClient;
     private FusedLocationProviderClient mFusedLocationClient;
@@ -30,7 +33,7 @@ public class GoogleLocationService extends Service implements GoogleApiClient.Co
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return mBinder;
     }
 
     @Override
@@ -52,6 +55,8 @@ public class GoogleLocationService extends Service implements GoogleApiClient.Co
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.e(TAG, "onStartCommand");
+        super.onStartCommand(intent, flags, startId);
         mGoogleApiClient.connect();
         return START_NOT_STICKY;
     }
@@ -100,6 +105,17 @@ public class GoogleLocationService extends Service implements GoogleApiClient.Co
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Log.e(TAG, "Location services connection failed with code " + connectionResult.getErrorCode());
+    }
+
+    /**
+     * Class used for the client Binder.  Because we know this service always
+     * runs in the same process as its clients, we don't need to deal with IPC.
+     */
+    public class LocalBinder extends Binder {
+        public GoogleLocationService getService() {
+            // Return this instance of LocalService so clients can call public methods
+            return GoogleLocationService.this;
+        }
     }
 
 }

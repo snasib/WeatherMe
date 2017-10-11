@@ -26,7 +26,7 @@ public class ApiRequest {
     @NonNull
     public String getApiUrl() {
         url = new StringBuilder(API_LINK);
-        url.append(String.format("%s/%s,%s", API_KEY, lat, lng));
+        url.append(String.format("%s/%s,%s?units=si", API_KEY, lat, lng));
         return url.toString();
     }
 }

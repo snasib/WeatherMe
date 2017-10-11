@@ -10,25 +10,14 @@ import android.view.MenuItem;
 import com.example.sadin.weatherme.R;
 
 public class MainActivity extends AppCompatActivity {
-    private static final int MY_PERMISSION = 0;
+    private static final String TAG = MainActivity.class.getSimpleName();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(MainActivity.this, new String[]{
-//                    Manifest.permission.INTERNET,
-//                    Manifest.permission.ACCESS_COARSE_LOCATION,
-//                    Manifest.permission.ACCESS_FINE_LOCATION,
-//                    Manifest.permission.ACCESS_NETWORK_STATE,
-//                    Manifest.permission.SYSTEM_ALERT_WINDOW,
-//                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-//            }, MY_PERMISSION);
-//        }
-
-//        startService(intentLocation);
     }
 
     @Override
@@ -53,5 +42,4 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
 }

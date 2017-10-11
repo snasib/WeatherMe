@@ -6,10 +6,13 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
+
+import java.util.Random;
 
 /**
  * Created by sadin on 10-Oct-17.
@@ -19,10 +22,12 @@ public class AndroidLocationService extends Service {
     private static final String TAG = "MyLocationService";
     private static final int LOCATION_INTERVAL = 1000;
     private static final float LOCATION_DISTANCE = 10f;
+    private final Random mGenerator = new Random();
     LocationListener[] mLocationListeners = new LocationListener[]{
             new LocationListener(LocationManager.PASSIVE_PROVIDER)
     };
     private LocationManager mLocationManager = null;
+    private IBinder mBinder = new LocalBinder();
 
     /*
     LocationListener[] mLocationListeners = new LocationListener[]{
@@ -32,8 +37,8 @@ public class AndroidLocationService extends Service {
     */
 
     @Override
-    public IBinder onBind(Intent arg0) {
-        return null;
+    public IBinder onBind(Intent intent) {
+        return mBinder;
     }
 
     @Override
@@ -99,6 +104,17 @@ public class AndroidLocationService extends Service {
         Log.e(TAG, "initializeLocationManager - LOCATION_INTERVAL: " + LOCATION_INTERVAL + " LOCATION_DISTANCE: " + LOCATION_DISTANCE);
         if (mLocationManager == null) {
             mLocationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+        }
+    }
+
+    /**
+     * Class used for the client Binder.  Because we know this service always
+     * runs in the same process as its clients, we don't need to deal with IPC.
+     */
+    public class LocalBinder extends Binder {
+        AndroidLocationService getService() {
+            // Return this instance of LocalService so clients can call public methods
+            return AndroidLocationService.this;
         }
     }
 

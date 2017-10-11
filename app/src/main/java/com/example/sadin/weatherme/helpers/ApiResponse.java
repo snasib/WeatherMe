@@ -3,6 +3,7 @@ package com.example.sadin.weatherme.helpers;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -12,12 +13,18 @@ import javax.net.ssl.HttpsURLConnection;
  */
 
 public class ApiResponse {
-    public String fetchData(String urlString) throws IOException {
+    String urlString;
+
+    public ApiResponse(String urlString) {
+        this.urlString = urlString;
+    }
+
+    public String fetchData() throws IOException {
         String stream = null;
-        HttpsURLConnection connection = null;
+        HttpURLConnection connection = null;
         URL url = new URL(urlString);
         try {
-            connection = (HttpsURLConnection) url.openConnection();
+            connection = (HttpURLConnection) url.openConnection();
             int responseCode = connection.getResponseCode();
             if (responseCode != HttpsURLConnection.HTTP_OK) {
                 throw new IOException("HTTP error code: " + responseCode);
