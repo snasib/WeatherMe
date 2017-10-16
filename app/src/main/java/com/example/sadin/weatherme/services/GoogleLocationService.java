@@ -45,12 +45,6 @@ public class GoogleLocationService extends Service implements GoogleApiClient.Co
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
-
-        if (!mGoogleApiClient.isConnected() || !mGoogleApiClient.isConnecting()) {
-            mGoogleApiClient.connect();
-        } else {
-            Log.e(TAG, "Unable to connect to Google Play Location service.");
-        }
     }
 
     @Override
@@ -58,11 +52,23 @@ public class GoogleLocationService extends Service implements GoogleApiClient.Co
         Log.e(TAG, "onStartCommand");
         super.onStartCommand(intent, flags, startId);
         mGoogleApiClient.connect();
-        return START_NOT_STICKY;
+
+        if (!mGoogleApiClient.isConnecting()) {
+            Log.e(TAG, "Trying to reconnect to Google Play Location Service");
+            mGoogleApiClient.connect();
+        }
+        if (!mGoogleApiClient.isConnected()) {
+            Log.e(TAG, "Unable to connect to Google Play Location service.");
+        }
+        if (mGoogleApiClient.isConnected()) {
+            Log.i(TAG, "Connected to Google Play Location service");
+        }
+        return START_STICKY;
     }
 
     @Override
     public void onDestroy() {
+        Log.e(TAG, "onDestroy");
         mGoogleApiClient.disconnect();
         super.onDestroy();
     }

@@ -1,67 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardview_sunset_sunrise"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:orientation="vertical"
+    app:cardUseCompatPadding="true">
 
-    <TextView
-        android:id="@+id/textSun"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="8dp"
-        android:text="@string/sunrise_amp_sunset" />
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/cardview_sunset_sunrise"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:orientation="vertical">
+        android:padding="10dp">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/image_sunrise"
+            android:layout_width="90dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            app:srcCompat="@drawable/sunrise" />
+
+        <TextView
+            android:id="@+id/text_sunrise_time"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/image_sunrise"
+            android:text="07:47"
+            android:textColor="@android:color/black" />
 
-            android:padding="10dp">
+        <ImageView
+            android:id="@+id/image_sunset"
+            android:layout_width="90dp"
+            android:layout_height="40dp"
+            android:layout_alignParentTop="true"
+            android:layout_toStartOf="@+id/text_sunset_time"
+            app:srcCompat="@drawable/sunset" />
 
-            <ImageView
-                android:id="@+id/image_sunrise"
-                android:layout_width="90dp"
-                android:layout_height="40dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                app:srcCompat="@drawable/sunrise" />
+        <TextView
+            android:id="@+id/text_sunset_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="15dp"
+            android:text="18:59"
+            android:textColor="@android:color/black" />
 
-            <TextView
-                android:id="@+id/text_sunrise_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/image_sunrise"
-                android:text="07:47"
-                android:textColor="@android:color/black" />
+    </RelativeLayout>
 
-            <ImageView
-                android:id="@+id/image_sunset"
-                android:layout_width="90dp"
-                android:layout_height="40dp"
-                android:layout_alignParentTop="true"
-                android:layout_toStartOf="@+id/text_sunset_time"
-                app:srcCompat="@drawable/sunset" />
-
-            <TextView
-                android:id="@+id/text_sunset_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="15dp"
-                android:text="18:59"
-                android:textColor="@android:color/black" />
-
-        </RelativeLayout>
-
-    </android.support.v7.widget.CardView>
-
-</LinearLayout>
+</android.support.v7.widget.CardView>
