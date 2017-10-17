@@ -25,7 +25,6 @@ import android.widget.Toast;
 import com.example.sadin.weatherme.BuildConfig;
 import com.example.sadin.weatherme.R;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -47,7 +46,7 @@ import java.util.Arrays;
 public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 35;
-    private static final long UPDATE_INTERVAL = 100 * 10;
+    private static final long UPDATE_INTERVAL = 100;
     private static final long FASTEST_UPDATE_INTERVAL = 50;
     private static final int REQUEST_CHECK_SETTINGS = 0x1;
     private FusedLocationProviderClient mFusedLocationClient;
@@ -61,7 +60,6 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     private String mLongitude = "";
     private SettingsClient mSettingsClient;
     private LocationSettingsRequest mLocationSettingsRequest;
-    private GoogleApiClient mGoogleApiClient;
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private boolean mRequestingLocationUpdates;
@@ -81,10 +79,26 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
         mRequestingLocationUpdates = false;
 
-
         createLocationRequest();
         createLocationCallback();
         buildLocationSettingsRequest();
+
+        if (!checkPermissions()) {
+            requestPermissions();
+        }
+
+        getLastLocation();
+    }
+
+    @SuppressWarnings("MissingPermission")
+    @Override
+    protected void onStart() {
+        Log.i(TAG, "onStart");
+        super.onStart();
+        if (mCurrentLocation == null) {
+            getLastLocation();
+        }
+        updateLocationUI();
     }
 
     @Override
@@ -96,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
+
         switch (item.getItemId()) {
             case R.id.action_settings:
                 Intent intent = new Intent(this, SettingsActivity.class);
@@ -110,41 +124,35 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         }
     }
 
-    @Override
-    protected void onStart() {
-        Log.i(TAG, "onStart");
-        super.onStart();
-        if (mRequestingLocationUpdates && checkPermissions()) {
-            startLocationUpdates();
-        } else if (!checkPermissions()) {
-            requestPermissions();
-        }
+    @SuppressWarnings("MissingPermission")
+    private void getLastLocation() {
+        mFusedLocationClient.getLastLocation()
+                .addOnCompleteListener(this, new OnCompleteListener<Location>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Location> task) {
+                        if (task.isSuccessful() && task.getResult() != null) {
+                            showSnackbar("Last location is detected");
+                            mCurrentLocation = task.getResult();
+                            updateLocationUI();
+                        }
+                        if (!task.isSuccessful() || task.getResult() == null) {
+                            Log.w(TAG, "getLastLocation:exception", task.getException());
+                            showSnackbar(getString(R.string.no_location_detected));
+                            startLocationUpdates();
+                        }
+                    }
+                });
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        updateLocationUI();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        stopLocationUpdates();
-    }
-
-    /**
-     * Requests location updates from the FusedLocationApi. Note: we don't call this unless location
-     * runtime permission has been granted.
-     */
     private void startLocationUpdates() {
         Log.i(TAG, "startLocationUpdates");
         mSettingsClient.checkLocationSettings(mLocationSettingsRequest)
                 .addOnSuccessListener(this, new OnSuccessListener<LocationSettingsResponse>() {
+                    @SuppressWarnings("MissingPermission")
                     @Override
                     public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
                         Log.i(TAG, "All location settings are satisfied.");
-                        //noinspection MissingPermission
+
                         mFusedLocationClient.requestLocationUpdates(mLocationRequest,
                                 mLocationCallback, null);
                     }
@@ -158,8 +166,8 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                                 Log.i(TAG, "Location settings are not satisfied. Attempting to upgrade " +
                                         "location settings ");
                                 try {
-                                    // Show the dialog by calling startResolutionForResult(), and check the
-                                    // result in onActivityResult().
+
+
                                     ResolvableApiException rae = (ResolvableApiException) e;
                                     rae.startResolutionForResult(MainActivity.this, REQUEST_CHECK_SETTINGS);
                                 } catch (IntentSender.SendIntentException sie) {
@@ -171,20 +179,14 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                                         "fixed here. Fix in Settings.";
                                 Log.e(TAG, errorMessage);
                                 Toast.makeText(MainActivity.this, errorMessage, Toast.LENGTH_LONG).show();
-                                mRequestingLocationUpdates = false;
                         }
                     }
                 });
     }
 
-    /**
-     * Removes location updates from the FusedLocationApi.
-     */
     private void stopLocationUpdates() {
-        if (!mRequestingLocationUpdates) {
-            Log.d(TAG, "stopLocationUpdates: updates never requested, no-op.");
-            return;
-        }
+        Log.d(TAG, "stopLocationUpdates");
+        showSnackbar("Stopping Location Updates");
         mFusedLocationClient.removeLocationUpdates(mLocationCallback)
                 .addOnCompleteListener(this, new OnCompleteListener<Void>() {
                     @Override
@@ -201,35 +203,25 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                 switch (resultCode) {
                     case Activity.RESULT_OK:
                         Log.i(TAG, "User agreed to make required location settings changes.");
+                        showSnackbar("User agreed to make required location settings changes." +
+                                "starting to update");
+
+                        startLocationUpdates();
                         break;
                     case Activity.RESULT_CANCELED:
                         Log.i(TAG, "User chose not to make required location settings changes.");
-                        mRequestingLocationUpdates = false;
                         break;
                 }
                 break;
         }
     }
 
-    /**
-     * Sets up the location request. Android has two location request settings:
-     * {@code ACCESS_COARSE_LOCATION} and {@code ACCESS_FINE_LOCATION}. These settings control
-     * the accuracy of the current location. This sample uses ACCESS_FINE_LOCATION, as defined in
-     * the AndroidManifest.xml.
-     * <p/>
-     * When the ACCESS_FINE_LOCATION setting is specified, combined with a fast update
-     * interval (5 seconds), the Fused Location Provider API returns location updates that are
-     * accurate to within a few feet.
-     * <p/>
-     * These settings are appropriate for mapping applications that show real-time location
-     * updates.
-     */
     private void createLocationRequest() {
         Log.i(TAG, "createLocationRequest");
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(UPDATE_INTERVAL);
         mLocationRequest.setFastestInterval(FASTEST_UPDATE_INTERVAL);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_LOW_POWER);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
 
     private void createLocationCallback() {
@@ -237,9 +229,16 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         mLocationCallback = new LocationCallback() {
             @Override
             public void onLocationResult(LocationResult locationResult) {
-                super.onLocationResult(locationResult);
+                Log.i(TAG, "onLocationResult");
+                showSnackbar("onLocationResult: " + locationResult.getLastLocation().getLatitude());
                 mCurrentLocation = locationResult.getLastLocation();
-                mRequestingLocationUpdates = false;
+                if (mCurrentLocation != null) {
+                    showSnackbar("Location is not null. Stopping the location updates");
+                    stopLocationUpdates();
+                }
+                updateLocationUI();
+
+
             }
         };
     }
@@ -282,8 +281,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                         Manifest.permission.ACCESS_NETWORK_STATE,
                 }));
 
-        // Provide an additional rationale to the user. This would happen if the user denied the
-        // request previously, but didn't check the "Don't ask again" checkbox.
+
         if (shouldProvideRationale) {
             Log.i(TAG, "Displaying permission rationale to provide additional context.");
 
@@ -291,16 +289,15 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            // Request permission
+
                             startLocationPermissionRequest();
                         }
                     });
 
         } else {
             Log.i(TAG, "Requesting permission");
-            // Request permission. It's possible this can be auto answered if device policy
-            // sets the permission in a given state or the user denied the permission
-            // previously and checked "Never ask again".
+
+
             startLocationPermissionRequest();
         }
     }
@@ -315,6 +312,9 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
             } else if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 if (mRequestingLocationUpdates) {
                     Log.i(TAG, "Permission granted, updates requested, starting location updates");
+                    showSnackbar("Permission granted onRequestPermissionResult" +
+                            "updating the location");
+
                     startLocationUpdates();
                 }
             } else {
@@ -322,7 +322,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                         new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                // Build intent that displays the App settings screen.
+
                                 Intent intent = new Intent();
                                 intent.setAction(
                                         Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
@@ -346,13 +346,6 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         }
     }
 
-    /**
-     * Shows a {@link Snackbar}.
-     *
-     * @param mainTextStringId The id for the string resource for the Snackbar text.
-     * @param actionStringId   The text of the action item.
-     * @param listener         The listener associated with the Snackbar action.
-     */
     private void showSnackbar(final int mainTextStringId, final int actionStringId,
                               View.OnClickListener listener) {
         Log.i(TAG, "showSnackbar");
@@ -365,13 +358,12 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     @Override
     public void onRefresh() {
         Log.i(TAG, "onSwipeRefresh");
-        mRequestingLocationUpdates = true;
+
         startLocationUpdates();
-        updateLocationUI();
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
-    //Tester Method
+
     private void updateLocationUI() {
         if (mCurrentLocation != null) {
             textView.setText(mCurrentLocation.getLatitude() + ", " + mCurrentLocation.getLongitude());
