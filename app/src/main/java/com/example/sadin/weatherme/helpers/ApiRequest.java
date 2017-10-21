@@ -7,7 +7,7 @@ import android.support.annotation.NonNull;
  */
 
 public class ApiRequest {
-    private final static String API_KEY = "4a07e6b64cb836d89ef3eb1bbe626582";
+    private final static String API_KEY = "";
     private final static String API_LINK = "https://api.darksky.net/forecast/";
     private StringBuilder url = null;
     private String lat = null;
