@@ -143,7 +143,6 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         }
     };
 
-    @SuppressWarnings("MissingPermission")
     @Override
     protected void onStart() {
         Log.i(TAG, "onStart");
