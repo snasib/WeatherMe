@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
@@ -61,12 +62,8 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     private static final long UPDATE_INTERVAL = 100;
     private static final long FASTEST_UPDATE_INTERVAL = 50;
     private static final int REQUEST_CHECK_SETTINGS = 0x1;
-    private final Response.ErrorListener onHttpError = new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError error) {
-            Log.e(TAG, "onHttpError: " + error.toString());
-        }
-    };
+    private static final String KEY_WEATHER_DATA = "weather";
+
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationCallback mLocationCallback;
     private LocationRequest mLocationRequest;
@@ -82,18 +79,9 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     private ApiUrl mApiUrl;
     private Gson gson;
     private Type mType;
-    private final Response.Listener<String> onHttpLoaded = new Response.Listener<String>() {
-        @Override
-        public void onResponse(String response) {
-            Log.i(TAG, "onHttpLoaded");
-            mType = new TypeToken<WeatherData>() {
-            }.getType();
-            gson = new Gson();
-            mWeatherData = gson.fromJson(response, mType);
-            updateUI();
-            Toast.makeText(MainActivity.this, "Weather updated successfully", Toast.LENGTH_SHORT).show();
-        }
-    };
+    private SharedPreferences mSharedPreferences;
+    private SharedPreferences.Editor mEditor;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,6 +106,13 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         mViewHolder = new ViewHolder(MainActivity.this);
         mWeatherData = new WeatherData();
         mRequestQueue = Volley.newRequestQueue(this);
+
+        gson = new Gson();
+        mType = new TypeToken<WeatherData>() {
+        }.getType();
+
+        mSharedPreferences = android.preference.PreferenceManager.getDefaultSharedPreferences(this);
+        mEditor = mSharedPreferences.edit();
     }
 
     private void fetchWeatherHttpData() {
@@ -130,6 +125,24 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         mRequestQueue.add(httpRequest);
     }
 
+    private final Response.ErrorListener onHttpError = new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            Log.e(TAG, "onHttpError: " + error.toString());
+        }
+    };
+    private final Response.Listener<String> onHttpLoaded = new Response.Listener<String>() {
+        @Override
+        public void onResponse(String response) {
+            Log.i(TAG, "onHttpLoaded");
+            mWeatherData = gson.fromJson(response, mType);
+            updateUI();
+            Toast.makeText(MainActivity.this, "Weather updated successfully", Toast.LENGTH_SHORT).show();
+            mEditor.putString(KEY_WEATHER_DATA, response)
+                    .apply();
+        }
+    };
+
     @SuppressWarnings("MissingPermission")
     @Override
     protected void onStart() {
@@ -141,7 +154,12 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     public void onResume() {
         Log.i(TAG, "onResume");
         super.onResume();
-        getLastLocation();
+        if (!mSharedPreferences.getString(KEY_WEATHER_DATA, "weather").equals("weather")) {
+            mWeatherData = gson.fromJson(mSharedPreferences.getString(KEY_WEATHER_DATA, "weather"), mType);
+            updateUI();
+        } else {
+            getLastLocation();
+        }
     }
 
     @Override

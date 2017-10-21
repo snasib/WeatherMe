@@ -13,6 +13,4 @@ public class WeatherData implements Serializable {
     public Currently currently;
     public Daily daily;
     public double offset;
-
-
 }
