@@ -10,6 +10,15 @@
     tools:showIn="@layout/activity_main">
 
 
+    <TextView
+        android:id="@+id/text_city"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textSize="18sp" />
+
     <include
         layout="@layout/cardview_temp"
         android:layout_width="match_parent"

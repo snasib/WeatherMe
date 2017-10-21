@@ -45,6 +45,7 @@ public class AndroidLocationService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.e(TAG, "onStartCommand");
         super.onStartCommand(intent, flags, startId);
+
         return START_STICKY;
     }
 

@@ -3,148 +3,136 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/text_details"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="8dp"
-        android:text="@string/details" />
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardview_pressure"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:layout_marginRight="10dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        app:cardUseCompatPadding="true">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:orientation="horizontal">
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/cardview_pressure"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginRight="8dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
+            android:padding="4dp">
+
+            <TextView
+                android:id="@+id/text_pressure"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:text="@string/pressure" />
 
-                android:padding="4dp">
+            <ImageView
+                android:id="@+id/image_pressure"
+                android:layout_width="40dp"
+                android:layout_height="25dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                app:srcCompat="@drawable/pressure" />
 
-                <TextView
-                    android:id="@+id/text_pressure"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:text="@string/pressure" />
+            <TextView
+                android:id="@+id/text_pressure_val"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/text_pressure"
+                android:layout_alignParentBottom="true"
+                android:text="975 HPa"
+                android:textColor="@android:color/black" />
 
-                <ImageView
-                    android:id="@+id/image_pressure"
-                    android:layout_width="40dp"
-                    android:layout_height="25dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    app:srcCompat="@drawable/pressure" />
+        </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/text_pressure_val"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignEnd="@+id/text_pressure"
-                    android:layout_alignParentBottom="true"
-                    android:text="975 HPa"
-                    android:textColor="@android:color/black" />
+    </android.support.v7.widget.CardView>
 
-            </RelativeLayout>
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardview_visibility"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:layout_marginRight="8dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        app:cardUseCompatPadding="true">
 
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/cardview_visibility"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginRight="8dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:padding="4dp">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/text_visibility"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="4dp">
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:text="@string/visibility" />
 
-                <TextView
-                    android:id="@+id/text_visibility"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:text="@string/visibility" />
+            <ImageView
+                android:id="@+id/image_visibility"
+                android:layout_width="40dp"
+                android:layout_height="25dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="4dp"
+                app:srcCompat="@drawable/visibility" />
 
-                <ImageView
-                    android:id="@+id/image_visibility"
-                    android:layout_width="40dp"
-                    android:layout_height="25dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="4dp"
-                    app:srcCompat="@drawable/visibility" />
+            <TextView
+                android:id="@+id/text_visibility_val"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:text="10 km"
+                android:textColor="@android:color/black" />
 
-                <TextView
-                    android:id="@+id/text_visibility_val"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:text="10 km"
-                    android:textColor="@android:color/black" />
+        </RelativeLayout>
 
-            </RelativeLayout>
+    </android.support.v7.widget.CardView>
 
-        </android.support.v7.widget.CardView>
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardview_humidity"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        app:cardUseCompatPadding="true">
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/cardview_humidity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="4dp">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="81dp"
-                android:padding="4dp">
+            <TextView
+                android:id="@+id/text_humidity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:text="@string/humidity" />
 
-                <TextView
-                    android:id="@+id/text_humidity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:text="@string/humidity" />
+            <ImageView
+                android:id="@+id/image_humidity"
+                android:layout_width="40dp"
+                android:layout_height="25dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                app:srcCompat="@drawable/humidity" />
 
-                <ImageView
-                    android:id="@+id/image_humidity"
-                    android:layout_width="40dp"
-                    android:layout_height="25dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    app:srcCompat="@drawable/humidity" />
+            <TextView
+                android:id="@+id/text_humidity_val"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:text="95 %"
+                android:textColor="@android:color/black" />
 
-                <TextView
-                    android:id="@+id/text_humidity_val"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:text="95 %"
-                    android:textColor="@android:color/black" />
+        </RelativeLayout>
 
-            </RelativeLayout>
-
-        </android.support.v7.widget.CardView>
-
-    </LinearLayout>
+    </android.support.v7.widget.CardView>
 
 </LinearLayout>
