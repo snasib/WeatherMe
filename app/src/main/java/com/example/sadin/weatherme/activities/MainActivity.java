@@ -155,13 +155,10 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         }
     };
 
-    // Check all connectivities whether available or not
     public boolean isNetworkAvailable() {
         mConnectivityManager = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = mConnectivityManager.getActiveNetworkInfo();
-        // if no network is available networkInfo will be null
-        // otherwise check if we are connected
         return networkInfo != null && networkInfo.isConnected();
     }
 
@@ -199,7 +196,6 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
         switch (item.getItemId()) {
             case R.id.action_settings:
                 Intent intent = new Intent(this, SettingsActivity.class);
@@ -295,8 +291,6 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                                 Log.i(TAG, "Location settings are not satisfied. Attempting to upgrade " +
                                         "location settings ");
                                 try {
-                                    // Show the dialog by calling startResolutionForResult(), and check the
-                                    // result in onActivityResult().
                                     ResolvableApiException rae = (ResolvableApiException) e;
                                     rae.startResolutionForResult(MainActivity.this, REQUEST_CHECK_SETTINGS);
                                 } catch (IntentSender.SendIntentException sie) {
@@ -362,8 +356,6 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                         Manifest.permission.ACCESS_NETWORK_STATE,
                 }));
 
-        // Provide an additional rationale to the user. This would happen if the user denied the
-        // request previously, but didn't check the "Don't ask again" checkbox.
         if (shouldProvideRationale) {
             Log.i(TAG, "Displaying permission rationale to provide additional context.");
 
@@ -371,16 +363,12 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            // Request permission
                             startLocationPermissionRequest();
                         }
                     });
 
         } else {
             Log.i(TAG, "Requesting permission");
-            // Request permission. It's possible this can be auto answered if device policy
-            // sets the permission in a given state or the user denied the permission
-            // previously and checked "Never ask again".
             startLocationPermissionRequest();
         }
     }
@@ -400,7 +388,6 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                         new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                // Build intent that displays the App settings screen.
                                 Intent intent = new Intent();
                                 intent.setAction(
                                         Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
@@ -442,13 +429,6 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         }
     }
 
-    /**
-     * Shows a {@link Snackbar}.
-     *
-     * @param mainTextStringId The id for the string resource for the Snackbar text.
-     * @param actionStringId   The text of the action item.
-     * @param listener         The listener associated with the Snackbar action.
-     */
     private void showSnackbar(final int mainTextStringId, final int actionStringId,
                               View.OnClickListener listener) {
         Log.i(TAG, "showSnackbar");
@@ -465,7 +445,6 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
-    //Tester Method
     private void updateUI() {
         Log.i(TAG, "updateLocationUI");
         if (mWeatherData != null) {
