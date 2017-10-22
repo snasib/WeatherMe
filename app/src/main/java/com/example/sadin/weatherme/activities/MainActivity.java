@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     private SharedPreferences mSharedPreferences;
     private SharedPreferences.Editor mEditor;
     private ConnectivityManager mConnectivityManager;
+    private NetworkInfo mNetworkInfo;
 
 
     @Override
@@ -158,8 +159,8 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     public boolean isNetworkAvailable() {
         mConnectivityManager = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = mConnectivityManager.getActiveNetworkInfo();
-        return networkInfo != null && networkInfo.isConnected();
+        mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
+        return mNetworkInfo != null && mNetworkInfo.isConnected();
     }
 
     @Override
@@ -441,7 +442,11 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     @Override
     public void onRefresh() {
         Log.i(TAG, "onSwipeRefresh");
-        fetchWeatherHttpData();
+        if (mLastLocation == null) {
+            startLocationUpdates();
+        } else {
+            fetchWeatherHttpData();
+        }
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
