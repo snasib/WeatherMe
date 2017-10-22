@@ -56,11 +56,11 @@ public class ViewHolder {
         textLastUpdateTime.setText(mUtils.convertUnixTimeToSimpleTime(mWeatherData.currently.time));
         textTemp.setText(String.format("%.0f\u00B0", mWeatherData.currently.temperature));
         textFeelsLike.setText(String.format("%s %.0f\u00B0", "Feels like", mWeatherData.currently.apparentTemperature));
-        textHumidity.setText(mWeatherData.currently.humidity + "%");
+        textHumidity.setText(String.format("%.0f", mWeatherData.currently.humidity * 100) + "%");
         textPressure.setText(String.format("%.0fHPa", mWeatherData.currently.pressure));
         textVisibility.setText(String.format("%.0fkm", mWeatherData.currently.visibility));
         textCity.setText(mUtils.getCityName(mWeatherData.latitude, mWeatherData.longitude));
-        textWindSpeed.setText(String.format("%.1f km/hour", mWeatherData.currently.windSpeed));
+        textWindSpeed.setText(String.format("%.1f m/s", mWeatherData.currently.windSpeed));
         imageIcon.setImageResource(mActivity.getResources().getIdentifier("drawable/" + mUtils.getIconName(mWeatherData.currently.icon), null, mActivity.getPackageName()));
         textWindDirection.setText(mUtils.getWindDirection(mWeatherData.currently.windBearing));
         textSunRise.setText(mUtils.getSunSimpleTime(mWeatherData.daily.data.get(0).sunriseTime));
