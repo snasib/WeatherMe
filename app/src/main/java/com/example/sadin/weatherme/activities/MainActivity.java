@@ -2,11 +2,14 @@ package com.example.sadin.weatherme.activities;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
@@ -81,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     private Type mType;
     private SharedPreferences mSharedPreferences;
     private SharedPreferences.Editor mEditor;
+    private ConnectivityManager mConnectivityManager;
 
 
     @Override
@@ -122,7 +126,15 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                 mApiUrl.getApiUrl(mLatitude, mLongitude),
                 onHttpLoaded,
                 onHttpError);
-        mRequestQueue.add(httpRequest);
+        if (isNetworkAvailable()) {
+            mRequestQueue.add(httpRequest);
+        } else {
+            Toast.makeText(this, "No internet access. Couldn't update.", Toast.LENGTH_SHORT).show();
+            if (!mSharedPreferences.getString(KEY_WEATHER_DATA, "weather").equals("weather")) {
+                mWeatherData = gson.fromJson(mSharedPreferences.getString(KEY_WEATHER_DATA, "weather"), mType);
+                updateUI();
+            }
+        }
     }
 
     private final Response.ErrorListener onHttpError = new Response.ErrorListener() {
@@ -142,6 +154,16 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                     .apply();
         }
     };
+
+    // Check all connectivities whether available or not
+    public boolean isNetworkAvailable() {
+        mConnectivityManager = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = mConnectivityManager.getActiveNetworkInfo();
+        // if no network is available networkInfo will be null
+        // otherwise check if we are connected
+        return networkInfo != null && networkInfo.isConnected();
+    }
 
     @Override
     protected void onStart() {
