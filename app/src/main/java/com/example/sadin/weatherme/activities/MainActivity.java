@@ -220,19 +220,6 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     @SuppressWarnings("MissingPermission")
     private void getLastLocation() {
         mFusedLocationClient.getLastLocation()
-//                .addOnCompleteListener(this, new OnCompleteListener<Location>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Location> task) {
-//                        if (task.isSuccessful() && task.getResult() != null) {
-//                            Log.i(TAG, "Last location detected");
-//                            onLocationChanged(task.getResult());
-//                        }
-//                        if (!task.isSuccessful() || task.getResult() == null) {
-//                            Log.w(TAG, "getLastLocation:exception", task.getException());
-//                            startLocationUpdates();
-//                        }
-//                    }
-//                })
                 .addOnSuccessListener(new OnSuccessListener<Location>() {
                     @Override
                     public void onSuccess(Location location) {
